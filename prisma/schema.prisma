@@ -1,0 +1,22 @@
+datasource db {
+  provider = "mysql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Participante {
+  id               Int      @id @default(autoincrement())
+  nome             String
+  documento        String   @unique
+  email            String   @unique
+  ddd              String
+  telefone         String
+  cidade           String
+  estado           String
+  codigoIbgeCidade Int
+  profissao        String
+  diasPresenca     String   
+  createdAt        DateTime @default(now())
+}
