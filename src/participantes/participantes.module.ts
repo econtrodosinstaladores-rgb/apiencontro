@@ -7,5 +7,6 @@ import { ParticipantesService } from './participantes.service';
   imports: [PrismaModule],
   controllers: [ParticipantesController],
   providers: [ParticipantesService],
+  exports: [ParticipantesService],
 })
 export class ParticipantesModule {}

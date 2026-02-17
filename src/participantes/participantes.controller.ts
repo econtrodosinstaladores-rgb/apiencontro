@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { CreateParticipanteDto } from './dto/create-participante.dto';
 import { ParticipantesService } from './participantes.service';
 
@@ -11,6 +12,7 @@ export class ParticipantesController {
     return this.participantesService.create(createParticipanteDto);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   findAll() {
     return this.participantesService.findAll();

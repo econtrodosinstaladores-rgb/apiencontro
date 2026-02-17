@@ -6,7 +6,7 @@ export class ParticipantesService {
   constructor(private prisma: PrismaService) {}
 
   async create(data: any) {
-    return this.prisma.participante.create({
+    return await this.prisma.participante.create({
       data: {
         ...data,
         diasPresenca: Array.isArray(data.diasPresenca)
