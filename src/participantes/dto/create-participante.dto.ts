@@ -1,25 +1,23 @@
 /* eslint-disable prettier/prettier */
 import {
-    ArrayNotEmpty,
-    IsArray,
-    IsEmail,
-    IsNotEmpty,
-    IsNumber,
-    IsString,
+  IsArray,
+  IsDateString,
+  IsEmail,
+  IsNotEmpty,
+  IsNumber,
+  IsString
 } from 'class-validator';
 
 export class CreateParticipanteDto {
-  @IsString()
+ @IsString()
   @IsNotEmpty({ message: 'O nome é obrigatório' })
   nome: string;
 
-  @IsString()
-  @IsNotEmpty({ message: 'O documento (CPF/CNPJ) é obrigatório' })
-  documento: string;
-
-  @IsEmail({}, { message: 'E-mail inválido' })
-  @IsNotEmpty({ message: 'O e-mail é obrigatório' })
+  @IsEmail({}, { message: 'Informe um e-mail válido' })
   email: string;
+
+  @IsNotEmpty({ message: 'O documento (CPF/CNPJ) é obrigatório' })
+  documento: string; // Certifique-se que o campo existe no Prisma Schema
 
   @IsString()
   @IsNotEmpty()
@@ -46,7 +44,6 @@ export class CreateParticipanteDto {
   profissao: string;
 
   @IsArray()
-  @ArrayNotEmpty({ message: 'Selecione ao menos um dia de presença' })
-  @IsString({ each: true })
+  @IsDateString({}, { each: true }) // Valida se cada item do array é uma data ISO válida
   diasPresenca: string[];
 }
