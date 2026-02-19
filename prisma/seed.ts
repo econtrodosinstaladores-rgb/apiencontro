@@ -7,16 +7,16 @@ async function main() {
   console.log('🌱 Iniciando o seed do banco de dados...');
 
   // 1. Criptografar a senha padrão
-  const passwordRaw = '123456'; // Senha inicial
+  const passwordRaw = '|MNn5Ug0Pe'; // Senha inicial
   const salt = await bcrypt.genSalt(10);
   const passwordHash = await bcrypt.hash(passwordRaw, salt);
 
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@encontro.com.br' },
+    where: { email: 'admin@encontrodosintaladores.com.br' },
     update: {}, // Se já existe, não altera nada
     create: {
-      email: 'admin@encontro.com.br',
-      name: 'Administrador Master',
+      email: 'admin@encontrodosintaladores.com.br',
+      name: 'Alisson',
       password: passwordHash,
       role: 'ADMIN',
     },
