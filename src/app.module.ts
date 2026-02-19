@@ -1,3 +1,4 @@
+import { MailerModule } from '@nestjs-modules/mailer';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
@@ -16,6 +17,22 @@ import { UsersModule } from './users/users.module';
     ParticipantesModule,
     UsersModule,
     AuthModule,
+    MailerModule.forRoot({
+      transport: {
+        host: 'smtp.hostinger.com',
+        port: 465,
+        secure: true,
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+        family: 4, // Força o Nodemailer a usar IPv4 (resolve o erro ENETUNREACH da Render)
+        connectionTimeout: 10000,
+      } as any,
+      defaults: {
+        from: `"1º Encontro de Refrigeristas" <${process.env.EMAIL_USER}>`,
+      },
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
