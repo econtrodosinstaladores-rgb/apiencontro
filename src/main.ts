@@ -15,7 +15,12 @@ async function bootstrap() {
   );
 
   app.enableShutdownHooks();
-  app.enableCors();
+  app.enableCors({
+    origin: ['https://encontrodosinstaladores.com.br', 'http://localhost:3000'],
+    credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Accept, Authorization',
+  });
   const port = Number(process.env.PORT) || 3000;
   await app.listen(port, '0.0.0.0');
 }
