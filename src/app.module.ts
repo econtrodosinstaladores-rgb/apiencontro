@@ -26,7 +26,7 @@ import { UsersModule } from './users/users.module';
           user: process.env.EMAIL_USER,
           pass: process.env.EMAIL_PASS,
         },
-        family: 4, // Força o Nodemailer a usar IPv4 (resolve o erro ENETUNREACH da Render)
+        family: 4,
         connectionTimeout: 10000,
       } as any,
       defaults: {

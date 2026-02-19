@@ -5,11 +5,13 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { Resend } from 'resend';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateParticipanteDto } from './dto/create-participante.dto';
 
 @Injectable()
 export class ParticipantesService {
+  private resend = new Resend(process.env.RESEND_API_KEY);
   constructor(
     private readonly prisma: PrismaService,
     private readonly mailerService: MailerService,
@@ -24,7 +26,8 @@ export class ParticipantesService {
         },
       });
       try {
-        await this.mailerService.sendMail({
+        await this.resend.emails.send({
+          from: `"1º Encontro de Refrigeristas" <${process.env.EMAIL_USER}>`,
           to: participante.email,
           subject: 'Inscrição Confirmada! 🎉',
           html: `
