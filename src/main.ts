@@ -19,6 +19,8 @@ async function bootstrap() {
     origin: [
       'https://encontrodosinstaladores.com.br',
       'https://www.encontrodosinstaladores.com.br',
+      'https://encontrodosinstaladoresmt.vercel.app',
+      'https://www.encontrodosinstaladoresmt.vercel.app',
       'http://localhost:3000',
     ],
     credentials: true,
