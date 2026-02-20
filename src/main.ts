@@ -16,7 +16,11 @@ async function bootstrap() {
 
   app.enableShutdownHooks();
   app.enableCors({
-    origin: ['https://encontrodosinstaladores.com.br', 'http://localhost:3000'],
+    origin: [
+      'https://encontrodosinstaladores.com.br',
+      'https://www.encontrodosinstaladores.com.br',
+      'http://localhost:3000',
+    ],
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type, Accept, Authorization',
