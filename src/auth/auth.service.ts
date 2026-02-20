@@ -9,12 +9,14 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
+import { Resend } from 'resend';
 import { ChangePasswordDto } from '../participantes/dto/change-password.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AuthService {
+  private resend = new Resend(process.env.RESEND_API_KEY);
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
@@ -66,7 +68,8 @@ export class AuthService {
     const resetLink = `${frontendUrl}/auth/reset-password?token=${token}`;
 
     try {
-      await this.mailerService.sendMail({
+      const { data, error } = await this.resend.emails.send({
+        from: '1º Encontro de Refrigeristas <contato@encontrodosinstaladores.com.br>',
         to: email,
         subject: 'Recuperação de Senha - 1º Encontro de Refrigeristas',
         html: `
@@ -90,6 +93,17 @@ export class AuthService {
           </div>
         `,
       });
+
+      if (error) {
+        console.error(
+          'O Resend recusou o envio da recuperação de senha:',
+          error,
+        );
+        throw new InternalServerErrorException(
+          'Falha no provedor de e-mail ao enviar o link.',
+        );
+      }
+      console.log('E-mail de recuperação enviado com sucesso! ID:', data?.id);
     } catch (error) {
       console.error('Erro ao enviar e-mail de recuperação:', error);
       throw new InternalServerErrorException(

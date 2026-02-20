@@ -1,4 +1,3 @@
-import { MailerService } from '@nestjs-modules/mailer';
 import {
   ConflictException,
   Injectable,
@@ -12,10 +11,7 @@ import { CreateParticipanteDto } from './dto/create-participante.dto';
 @Injectable()
 export class ParticipantesService {
   private resend = new Resend(process.env.RESEND_API_KEY);
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly mailerService: MailerService,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(data: CreateParticipanteDto) {
     try {
@@ -27,13 +23,13 @@ export class ParticipantesService {
       });
       try {
         await this.resend.emails.send({
-          from: `"1º Encontro de Refrigeristas" <${process.env.EMAIL_USER}>`,
+          from: `"1º Encontro de Refrigeristas do MT" <${process.env.EMAIL_USER}>`,
           to: participante.email,
           subject: 'Inscrição Confirmada! 🎉',
           html: `
             <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
               <div style="background-color: #1e3a8a; padding: 20px; text-align: center;">
-                <h1 style="color: #ffffff; margin: 0;">1º Encontro de Refrigeristas</h1>
+                <h1 style="color: #ffffff; margin: 0;">1º Encontro de Refrigeristas do MT</h1>
               </div>
               <div style="padding: 30px;">
                 <h2 style="color: #1e3a8a; margin-top: 0;">Olá, ${participante.nome}!</h2>
