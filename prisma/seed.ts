@@ -6,16 +6,15 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 Iniciando o seed do banco de dados...');
 
-  // 1. Criptografar a senha padrão
-  const passwordRaw = '|MNn5Ug0Pe'; // Senha inicial
+  const passwordRaw = '|MNn5Ug0Pe';
   const salt = await bcrypt.genSalt(10);
   const passwordHash = await bcrypt.hash(passwordRaw, salt);
 
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@encontrodosintaladores.com.br' },
-    update: {}, // Se já existe, não altera nada
+    where: { email: 'admin@encontrodosinstaladores.com.br' },
+    update: {},
     create: {
-      email: 'admin@encontrodosintaladores.com.br',
+      email: 'admin@encontrodosinstaladores.com.br',
       name: 'Alisson',
       password: passwordHash,
       role: 'ADMIN',
